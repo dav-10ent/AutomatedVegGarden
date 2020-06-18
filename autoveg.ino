@@ -7,7 +7,7 @@ int SoilPin = 0;
 void setup(){ 
   
   pinMode(motor, OUTPUT);
-  pinMode(soilPower, OUTPUT);
+  pinMode(SoilPower, OUTPUT);
   
   }
 
