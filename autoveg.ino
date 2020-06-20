@@ -1,28 +1,37 @@
 #define SoilPower 7
 #define motor 3
+#define switchPin 2
 
-int val = 0;
-int SoilPin = 0;
+int switchState = 0;   
+int val = 0; //value for storing moisture value 
+int soilPin = A0;//Declare a variable for the soil moisture sensor 
 
 void setup(){ 
-  
+  pinMode(switchPin, INPUT);
   pinMode(motor, OUTPUT);
-  pinMode(SoilPower, OUTPUT);
-  
+  pinMode(switchPin, INPUT);
+  Serial.begin(9600);   // open serial over USB
+  pinMode(soilPower, OUTPUT);//Set D7 as an OUTPUT
+  digitalWrite(soilPower, LOW);//Set to LOW so no power is flowing through the sensor
   }
 
 void loop(){
-  sensorValue = readSoil();
-  
-  if (sensorValue <= 100){
-    digitalWrite(motor, HIGH);
-    delay(5000);
+  switchState = digitalRead(switchPin);
+  Serial.print("Soil Moisture = ");    
+  Serial.println(readSoil());
+  if (switchState == HIGH){
+    delay(1000);
     digitalWrite(motor, LOW);
+    delay(10000);
+    digitalWrite(motor, HIGH);
+    delay(15000);
   }
-  else {
+  else{
     delay(1000);
   }
+
 }
+
 
 int readSoil()
 {
